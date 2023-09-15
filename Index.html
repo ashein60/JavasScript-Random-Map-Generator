@@ -1,0 +1,41 @@
+<canvas id="canvas" width="320" height="240" style="border:1px solid black;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script type="text/javascript" src="javascript/Main.js"></script>
+<script type="text/javascript" src="javascript/MapGenerator.js"></script>
+<script type="text/javascript" src="javascript/Render.js"></script>
+<script type="text/javascript" src="javascript/Misc.js"></script>
+
+<script>
+	"use strict";
+  let canvas;
+  let context;
+	let secondsPassed = 0;
+	let oldTimeStamp = 0;
+  window.onload = init;
+
+  function init()
+	{
+  	canvas = document.getElementById('canvas');
+		canvas.style.position = 'absolute';
+		canvas.width = canvas.width * 3;
+		canvas.height = canvas.height * 3;
+		canvas.style.top = ((window.innerHeight - canvas.height) / 2) + "px";
+  	canvas.style.left = ((window.innerWidth - canvas.width) / 2) + "px";
+    context = canvas.getContext('2d');
+		Start();
+    window.requestAnimationFrame(GameLoop);
+  }
+  function GameLoop(timeStamp)
+	{
+		secondsPassed = (timeStamp - oldTimeStamp) / 1000;
+		oldTimeStamp = timeStamp;
+		timeStamp = Math.min(secondsPassed, 0.1); //for slow computers
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		Update();
+    Paint();
+    window.requestAnimationFrame(GameLoop);
+  }
+</script>
